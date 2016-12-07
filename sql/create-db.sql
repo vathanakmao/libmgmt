@@ -31,20 +31,24 @@ create table librarian (
 create table borrow (
 	member_id varchar(16) not null,
 	book_id bigint not null,
+	librarian_id int not null,
 	date_borrowed timestamp not null,
 	date_returned timestamp,
-	primary key (member_id, book_id, date_borrowed),
+	primary key (member_id, book_id, librarian_id, date_borrowed),
 	foreign key (member_id) references member(id),
-	foreign key (book_id) references book(id)
+	foreign key (book_id) references book(id),
+	foreign key (librarian_id) references librarian(id)
 ) engine=innodb default charset=utf8;
 
 create table reserve (
-	member_id bigint not null,
+	member_id varchar(16) not null,
 	book_id bigint not null,
+	librarian_id int not null,
 	date_reserved timestamp not null,
-	primary key (member_id, book_id, date_reserved),
-	foreign key (member_id) references member(member_id),
-	foreign key (book_id) references book(bookd_id)
+	primary key (member_id, book_id, librarian_id, date_reserved),
+	foreign key (member_id) references member(id),
+	foreign key (book_id) references book(id),
+	foreign key (librarian_id) references librarian(id)
 ) engine=innodb default charset=utf8;
 
 create index idx_book_title on book(title);
