@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Library Management" default="all" basedir="."> 
+  <property name="ANTPROPERTIES" value="properties/build-properties.xml"/>
+  <import file="${ANTPROPERTIES}"/>
+
+  <target name="clean">
+    <delete dir="classes"/>
+    <delete dir="lib"/>
+  </target>
+
+  <target name="zip" description="Package source in zip file">
+    <delete file="./libmgmt.zip"/>
+    <zip destfile="./libmgmt.zip">
+      <zipfileset dir="sql" prefix="sql"/>
+      <zipfileset dir="src" prefix="src"/>
+      <zipfileset dir="properties" prefix="properties"/>
+      <zipfileset dir="." includes="build.xml"/>
+    </zip>
+  </target>
+
+  <target name="compile" description="Compile Library Mangement">
+    <mkdir dir="classes"/>
+    <echo message="Library Mangement is using ${JAVAC} as Java compiler"/>
+    <javac srcdir="src" destdir="classes" fork="yes" executable="${JAVAC}"
+           classpathref="CLASSPATH" debug="on" includeantruntime="false">
+      <compilerarg value="-Xlint:unchecked"/>
+      <compilerarg value="-Xlint:deprecation"/>
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="lib"/>
+    <jar destfile="lib/libmgmt.jar" basedir="classes"/>
+  </target>
+
+  <target name="create-db">
+    <sql driver="${DB.DRIVER}" url="${DB.URL.NEWDATABASE}" userid="${DB.USER}"
+         password="${DB.PASSWORD}" classpathref="CLASSPATH"
+         delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
+      create database ${DB.SID};
+    </sql>
+  </target>
+
+  <target name="drop-tables">
+    <sql driver="${DB.DRIVER}" url="${DB.URL}" userid="${DB.USER}"
+         password="${DB.PASSWORD}" classpathref="CLASSPATH"
+         delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
+      <transaction src="./sql/drop-tables.sql"></transaction>
+    </sql>
+  </target>
+
+  <target name="build-tables" description="Create database tables">
+    <sql driver="${DB.DRIVER}" url="${DB.URL}" userid="${DB.USER}"
+         password="${DB.PASSWORD}" classpathref="CLASSPATH"
+         delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
+      <transaction src="./sql/create-tables.sql"></transaction>
+    </sql>
+  </target>
+
+  <target name="populate-tables" description="Populate database tables">
+    <sql driver="${DB.DRIVER}" url="${DB.URL}" userid="${DB.USER}"
+         password="${DB.PASSWORD}" classpathref="CLASSPATH"
+         delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
+      <transaction src="./sql/populate-tables.sql"></transaction>
+    </sql>
+  </target>
+
+  <target name="setup-db">
+  	  <antcall target="create-db"/>
+      <antcall target="drop-tables"/>
+      <antcall target="build-tables"/>
+      <antcall target="populate-tables"/>
+  </target>
+
+  <target name="run">
+    <java classname="com.vathanakmao.libmgmt.HelloWorld"
+          classpathref="CLASSPATH" fork="true" dir=".">
+      <arg value="${PROPERTIESFILE}"/>
+    </java>
+  </target>
+
+</project>
