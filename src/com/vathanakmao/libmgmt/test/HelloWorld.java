@@ -1,4 +1,4 @@
-package com.vathanakmao.libmgmt;
+package com.vathanakmao.libmgmt.test;
 
 public class HelloWorld {
 

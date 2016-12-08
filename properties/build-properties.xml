@@ -20,7 +20,6 @@
   <property name="DB.USER" value="root"/>
   <property name="DB.PASSWORD" value="root"/>
   <property name="DB.DELIMITER" value=";"/>
-
 </project>
 
 

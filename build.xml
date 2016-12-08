@@ -73,10 +73,17 @@
   </target>
 
   <target name="run">
-    <java classname="com.vathanakmao.libmgmt.HelloWorld"
+    <java classname="com.vathanakmao.libmgmt.test.HelloWorld"
           classpathref="CLASSPATH" fork="true" dir=".">
       <arg value="${PROPERTIESFILE}"/>
     </java>
   </target>
+	
+	<target name="run-dbutil">
+	    <java classname="com.vathanakmao.libmgmt.test.DbUtil"
+	          classpathref="CLASSPATH" fork="true" dir=".">
+	      <arg value="${PROPERTIESFILE}"/>
+	    </java>
+	  </target>
 
 </project>
