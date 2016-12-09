@@ -85,5 +85,10 @@
 	      <arg value="${PROPERTIESFILE}"/>
 	    </java>
 	  </target>
-
+	<target name="run-memberdao">
+		    <java classname="com.vathanakmao.libmgmt.test.dao.MemberDaoTest"
+		          classpathref="CLASSPATH" fork="true" dir=".">
+		      <arg value="${PROPERTIESFILE}"/>
+		    </java>
+		  </target>
 </project>
