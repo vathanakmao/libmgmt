@@ -14,7 +14,7 @@ public enum Sex {
 	 * @param abbreviation
 	 * @return
 	 */
-	public Sex from(String abbreviation) {
+	public static Sex fromString(String abbreviation) {
 		for (Sex sex : Sex.values()) {
 			if (sex.abbreviation.equals(abbreviation)) {
 				return sex;

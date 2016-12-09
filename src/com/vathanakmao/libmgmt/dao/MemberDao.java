@@ -2,7 +2,12 @@ package com.vathanakmao.libmgmt.dao;
 
 import com.vathanakmao.libmgmt.model.Member;
 
-public class MemberDao extends GenericDao<Member> {
+public class MemberDao extends GenericDao<Member, String> {
+	
+	public MemberDao() {
+		super(new MemberRowMapper());
+	}
+
 	private static final String TABLE_NAME = "member";
 	
 	@Override
