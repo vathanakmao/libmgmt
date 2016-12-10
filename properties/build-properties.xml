@@ -10,7 +10,7 @@
 	<property name="web-directory" value="WebContent"/>
 	
 	<!-- ======= Tomcat ======= -->
-	<property name="appserver.home" value="/usr/local/apache-tomcat-7.0.73"/>
+	<property name="catalina.home" value="/usr/local/apache-tomcat-7.0.73"/>
 
   <property name="PROPERTIESFILE" value="properties/db-properties.xml"/>
   <property name="MYSQLDRIVER" value="lib/mysql-connector-java-5.1.40-bin.jar"/>

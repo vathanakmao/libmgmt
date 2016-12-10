@@ -91,12 +91,12 @@
 	<!-- ============= Tomcat ============= -->
 	
 	<path id="catalina-ant-classpath">
-		<fileset dir="${appserver.home}/lib">
+		<fileset dir="${catalina.home}/lib">
 			<include name="catalina-ant.jar"/>
 			<include name="tomcat-coyote.jar"/>
 			<include name="tomcat-util.jar"/>
 		</fileset>
-		<fileset dir="${appserver.home}/bin">
+		<fileset dir="${catalina.home}/bin">
 			<include name="tomcat-juli.jar"/>
 		</fileset>
 	</path>
