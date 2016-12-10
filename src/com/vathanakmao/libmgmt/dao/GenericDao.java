@@ -5,16 +5,23 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public abstract class GenericDao<T, ID> {
+	private String tableName;
 	private RowMapper<T> rowMapper;
 	
-	protected abstract String getTableName();
-	protected abstract String generateInsertSql(T e);
+	protected abstract String generateSqlInsert(T e);
 	
-	protected GenericDao(RowMapper<T> rowMapper) {
+	protected GenericDao(String tableName, RowMapper<T> rowMapper) {
+		this.tableName = tableName;
 		this.rowMapper = rowMapper;
+	}
+	
+	protected String getTableName() {
+		return tableName;
 	}
 	
 	protected RowMapper<T> getRowMapper() {
@@ -29,6 +36,18 @@ public abstract class GenericDao<T, ID> {
 			sql.append("where id=").append(id);
 		} else {
 			throw new IllegalArgumentException(id + " is of unmapped type");
+		}
+		return sql.toString();
+	}
+	
+	protected String generateSqlSelectWhereColumnEquals(String colName, Object colValue) {
+		StringBuffer sql = new StringBuffer("select * from ").append(getTableName());
+		if (colValue instanceof String) {
+			sql.append(" where ").append(colName).append("='").append(colValue).append("'");
+		} else if (colValue instanceof Long || colValue instanceof Integer) {
+			sql.append("where ").append(colName).append("=").append(colValue);
+		} else {
+			throw new IllegalArgumentException(colValue + " is of unmapped type");
 		}
 		return sql.toString();
 	}
@@ -67,8 +86,34 @@ public abstract class GenericDao<T, ID> {
 		return null;
 	}
 	
+	public List<T> getBy(String columnName, Object columnValue) throws SQLException {
+		List<T> result = new ArrayList<T>();
+		PreparedStatement stmt = null;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(generateSqlSelectWhereColumnEquals(columnName, columnValue));
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				T pojo = getRowMapper().toPojo(rs);
+				result.add(pojo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// Close Statement and Connection
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return result;
+	}
+	
 	public void save(T e) throws SQLException {
-		String query = generateInsertSql(e);
+		String query = generateSqlInsert(e);
 		Connection conn = getConnection();
 		PreparedStatement stmt = conn.prepareStatement(query);
 		stmt.execute();
