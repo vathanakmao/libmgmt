@@ -1,105 +1,164 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name="Library Management" default="all" basedir="."> 
-  <property name="ANTPROPERTIES" value="properties/build-properties.xml"/>
-  <import file="${ANTPROPERTIES}"/>
+<project name="Library Management" default="all" basedir=".">
+	<property name="ANTPROPERTIES" value="properties/build-properties.xml"/>
+	<import file="${ANTPROPERTIES}"/>
 
-  <target name="clean">
-    <delete dir="${classes-directory}"/>
-    <delete dir="lib"/>
-  </target>
+	<target name="clean">
+		<delete dir="${classes-directory}"/>
+		<delete dir="lib"/>
+	</target>
 
-  <target name="zip" description="Package source in zip file">
-    <delete file="./libmgmt.zip"/>
-    <zip destfile="./libmgmt.zip">
-      <zipfileset dir="sql" prefix="sql"/>
-      <zipfileset dir="src" prefix="src"/>
-      <zipfileset dir="properties" prefix="properties"/>
-      <zipfileset dir="." includes="build.xml"/>
-    </zip>
-  </target>
+	<target name="zip" description="Package source in zip file">
+		<delete file="./libmgmt.zip"/>
+		<zip destfile="./libmgmt.zip">
+			<zipfileset dir="sql" prefix="sql"/>
+			<zipfileset dir="src" prefix="src"/>
+			<zipfileset dir="properties" prefix="properties"/>
+			<zipfileset dir="." includes="build.xml"/>
+		</zip>
+	</target>
 
-  <target name="compile" description="Compile Library Mangement">
-    <mkdir dir="${classes-directory}"/>
-    <echo message="Library Mangement is using ${JAVAC} as Java compiler"/>
-    <javac srcdir="src" destdir="${classes-directory}" fork="yes" executable="${JAVAC}"
+	<target name="compile" description="Compile Library Mangement">
+		<mkdir dir="${classes-directory}"/>
+		<echo message="Library Mangement is using ${JAVAC} as Java compiler"/>
+		<javac srcdir="src" destdir="${classes-directory}" fork="yes" executable="${JAVAC}"
            classpathref="CLASSPATH" debug="on" includeantruntime="false">
-      <compilerarg value="-Xlint:unchecked"/>
-      <compilerarg value="-Xlint:deprecation"/>
-    </javac>
-  </target>
+			<compilerarg value="-Xlint:unchecked"/>
+			<compilerarg value="-Xlint:deprecation"/>
+		</javac>
+	</target>
 
-  <target name="jar" depends="compile">
-    <mkdir dir="lib"/>
-    <jar destfile="lib/libmgmt.jar" basedir="classes-directory"/>
-  </target>
+	<target name="jar" depends="compile">
+		<mkdir dir="lib"/>
+		<jar destfile="lib/libmgmt.jar" basedir="classes-directory"/>
+	</target>
 
-  <target name="create-db">
-    <sql driver="${DB.DRIVER}" url="${DB.URL.NEWDATABASE}" userid="${DB.USER}"
-         password="${DB.PASSWORD}" classpathref="CLASSPATH"
-         delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
-      create database ${DB.SID};
-    </sql>
-  </target>
-
-  <target name="drop-tables">
-    <sql driver="${DB.DRIVER}" url="${DB.URL}" userid="${DB.USER}"
-         password="${DB.PASSWORD}" classpathref="CLASSPATH"
-         delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
-      <transaction src="./sql/drop-tables.sql"></transaction>
-    </sql>
-  </target>
-
-  <target name="build-tables" description="Create database tables">
-    <sql driver="${DB.DRIVER}" url="${DB.URL}" userid="${DB.USER}"
-         password="${DB.PASSWORD}" classpathref="CLASSPATH"
-         delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
-      <transaction src="./sql/create-tables.sql"></transaction>
-    </sql>
-  </target>
-
-  <target name="populate-tables" description="Populate database tables">
-    <sql driver="${DB.DRIVER}" url="${DB.URL}" userid="${DB.USER}"
-         password="${DB.PASSWORD}" classpathref="CLASSPATH"
-         delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
-      <transaction src="./sql/populate-tables.sql"></transaction>
-    </sql>
-  </target>
-
-  <target name="setup-db">
-  	  <antcall target="create-db"/>
-      <antcall target="drop-tables"/>
-      <antcall target="build-tables"/>
-      <antcall target="populate-tables"/>
-  </target>
-	
 	<target name="war" depends="compile">
-			<mkdir dir="${build-output-dir}" />
-			<delete file="${build-output-dir}/${war-file-name}" />
-			<war warfile="${build-output-dir}/${war-file-name}">
-				<classes dir="${classes-directory}" />
-				<fileset dir="${web-directory}">
-								<!-- Need to exclude it since webxml is an attribute of the war tag above -->
-				</fileset>
-			</war>
-		</target>
+		<mkdir dir="${build-output-dir}" />
+		<delete file="${build-output-dir}/${war-file-name}" />
+		<war warfile="${build-output-dir}/${war-file-name}">
+			<classes dir="${classes-directory}" />
+			<fileset dir="${web-directory}">
+				<!-- Need to exclude it since webxml is an attribute of the war tag above -->
+			</fileset>
+		</war>
+	</target>
 
-  <target name="run">
-    <java classname="com.vathanakmao.libmgmt.test.HelloWorld"
-          classpathref="CLASSPATH" fork="true" dir=".">
-      <arg value="${PROPERTIESFILE}"/>
-    </java>
-  </target>
+	<!-- ============== Database ============== -->
+
+	<target name="create-db">
+		<sql driver="${DB.DRIVER}" url="${DB.URL.NEWDATABASE}" userid="${DB.USER}"
+         	password="${DB.PASSWORD}" classpathref="CLASSPATH"
+         	delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
+      			create database ${DB.SID};
+    	</sql>
+	</target>
+
+	<target name="drop-tables">
+		<sql driver="${DB.DRIVER}" url="${DB.URL}" userid="${DB.USER}"
+         password="${DB.PASSWORD}" classpathref="CLASSPATH"
+         delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
+			<transaction src="./sql/drop-tables.sql">
+			</transaction>
+		</sql>
+	</target>
+
+	<target name="build-tables" description="Create database tables">
+		<sql driver="${DB.DRIVER}" url="${DB.URL}" userid="${DB.USER}"
+         password="${DB.PASSWORD}" classpathref="CLASSPATH"
+         delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
+			<transaction src="./sql/create-tables.sql">
+			</transaction>
+		</sql>
+	</target>
+
+	<target name="populate-tables" description="Populate database tables">
+		<sql driver="${DB.DRIVER}" url="${DB.URL}" userid="${DB.USER}"
+         password="${DB.PASSWORD}" classpathref="CLASSPATH"
+         delimiter="${DB.DELIMITER}" autocommit="false" onerror="continue">
+			<transaction src="./sql/populate-tables.sql">
+			</transaction>
+		</sql>
+	</target>
+
+	<target name="setup-db">
+		<antcall target="create-db"/>
+		<antcall target="drop-tables"/>
+		<antcall target="build-tables"/>
+		<antcall target="populate-tables"/>
+	</target>
+
+	<!-- ============= Tomcat ============= -->
 	
+	<path id="catalina-ant-classpath">
+		<fileset dir="${appserver.home}/lib">
+			<include name="catalina-ant.jar"/>
+			<include name="tomcat-coyote.jar"/>
+			<include name="tomcat-util.jar"/>
+		</fileset>
+		<fileset dir="${appserver.home}/bin">
+			<include name="tomcat-juli.jar"/>
+		</fileset>
+	</path>
+
+	<taskdef name="start" classname="org.apache.catalina.ant.StartTask" classpathref="catalina-ant-classpath"/>
+	<taskdef name="stop" classname="org.apache.catalina.ant.StopTask" classpathref="catalina-ant-classpath"/>
+	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="catalina-ant-classpath"/>
+	<taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="catalina-ant-classpath"/>
+
+	<target name="stop-tomcat" description="stop application in tomcat">
+		<stop url="${tomcat-manager-url}" username="${tomcat-manager-username}"
+				password="${tomcat-manager-password}" path="/${project-name}" />
+	</target>
+
+	<target name="start-tomcat" description="start application in tomcat">
+		<start url="${tomcat-manager-url}" username="${tomcat-manager-username}"
+				password="${tomcat-manager-password}" path="/${project-name}" />
+	</target>
+
+	<target name="undeploy" description="undeploy from tomcat">
+		<undeploy 
+				failonerror="no"
+				url="${tomcat-manager-url}"
+				username="${tomcat-manager-username}"
+				password="${tomcat-manager-password}"
+				path="/${project-name}"
+			/>
+	</target>
+
+	<target name="deploy" description="deploy to tomcat">
+		<echo>deploying from client</echo>
+		<deploy 
+				url="${tomcat-manager-url}"
+				username="${tomcat-manager-username}"
+				password="${tomcat-manager-password}"
+				path="/${project-name}"
+				war="file:${build-output-dir}/${war-file-name}"
+			/>
+	</target>
+
+	<target name="redeploy" depends="undeploy,deploy" description="Redeploy app to Tomcat">
+	</target>
+
+	<!-- ============= Run test classes ============= -->
+
+	<target name="run">
+		<java classname="com.vathanakmao.libmgmt.test.HelloWorld"
+          classpathref="CLASSPATH" fork="true" dir=".">
+			<arg value="${PROPERTIESFILE}"/>
+		</java>
+	</target>
+
 	<target name="run-dbutil">
-	    <java classname="com.vathanakmao.libmgmt.test.DbUtil"
+		<java classname="com.vathanakmao.libmgmt.test.DbUtil"
 	          classpathref="CLASSPATH" fork="true" dir=".">
-	      <arg value="${PROPERTIESFILE}"/>
-	    </java>
-	  </target>
+			<arg value="${PROPERTIESFILE}"/>
+		</java>
+	</target>
 	<target name="run-memberdao">
-		    <java classname="com.vathanakmao.libmgmt.test.dao.MemberDaoTest"
+		<java classname="com.vathanakmao.libmgmt.test.dao.MemberDaoTest"
 		          classpathref="CLASSPATH" fork="true" dir=".">
-		      <arg value="${PROPERTIESFILE}"/>
-		    </java>
-		  </target>
+			<arg value="${PROPERTIESFILE}"/>
+		</java>
+	</target>
 </project>
