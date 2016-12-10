@@ -2,12 +2,17 @@
 <project name="MySQL Properties" default="all" basedir=".">
   <property name="JAVAC" value="javac"/>
   <property name="JAVA" value="java"/>
+	<property name="war-file-name" value="libmgmt.war"/>
+	<property name="build-directory" value="."/>
+	<property name="build-output-dir" value="${build-directory}/build"/>
+	<property name="classes-directory" value="${build-output-dir}/classes"/>
+	<property name="web-directory" value="WebContent"/>
 
   <property name="PROPERTIESFILE" value="properties/db-properties.xml"/>
   <property name="MYSQLDRIVER" value="lib/mysql-connector-java-5.1.40-bin.jar"/>
 
   <path id="CLASSPATH">
-    <pathelement location="classes"/>
+    <pathelement location="${classes-directory}"/>
     <pathelement location="${MYSQLDRIVER}"/>
   </path>
 

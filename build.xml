@@ -4,7 +4,7 @@
   <import file="${ANTPROPERTIES}"/>
 
   <target name="clean">
-    <delete dir="classes"/>
+    <delete dir="${classes-directory}"/>
     <delete dir="lib"/>
   </target>
 
@@ -19,9 +19,9 @@
   </target>
 
   <target name="compile" description="Compile Library Mangement">
-    <mkdir dir="classes"/>
+    <mkdir dir="${classes-directory}"/>
     <echo message="Library Mangement is using ${JAVAC} as Java compiler"/>
-    <javac srcdir="src" destdir="classes" fork="yes" executable="${JAVAC}"
+    <javac srcdir="src" destdir="${classes-directory}" fork="yes" executable="${JAVAC}"
            classpathref="CLASSPATH" debug="on" includeantruntime="false">
       <compilerarg value="-Xlint:unchecked"/>
       <compilerarg value="-Xlint:deprecation"/>
@@ -30,7 +30,7 @@
 
   <target name="jar" depends="compile">
     <mkdir dir="lib"/>
-    <jar destfile="lib/libmgmt.jar" basedir="classes"/>
+    <jar destfile="lib/libmgmt.jar" basedir="classes-directory"/>
   </target>
 
   <target name="create-db">
@@ -71,6 +71,17 @@
       <antcall target="build-tables"/>
       <antcall target="populate-tables"/>
   </target>
+	
+	<target name="war" depends="compile">
+			<mkdir dir="${build-output-dir}" />
+			<delete file="${build-output-dir}/${war-file-name}" />
+			<war warfile="${build-output-dir}/${war-file-name}">
+				<classes dir="${classes-directory}" />
+				<fileset dir="${web-directory}">
+								<!-- Need to exclude it since webxml is an attribute of the war tag above -->
+				</fileset>
+			</war>
+		</target>
 
   <target name="run">
     <java classname="com.vathanakmao.libmgmt.test.HelloWorld"

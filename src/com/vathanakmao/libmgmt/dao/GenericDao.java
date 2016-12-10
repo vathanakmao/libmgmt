@@ -52,7 +52,7 @@ public abstract class GenericDao<T, ID> {
 		return sql.toString();
 	}
 	
-	public Connection getConnection() throws SQLException {
+	protected Connection getConnection() throws SQLException {
 	    Connection conn = null;
 	    Properties connectionProps = new Properties();
 	    connectionProps.put("user", "root");
@@ -61,7 +61,7 @@ public abstract class GenericDao<T, ID> {
 	    return conn;
 	}
 	
-	public T getById(ID id) throws SQLException {
+	public T getById(ID id) throws SQLException  {
 		PreparedStatement stmt = null;
 		Connection conn = null;
 		try {
@@ -72,8 +72,6 @@ public abstract class GenericDao<T, ID> {
 				T pojo = getRowMapper().toPojo(rs);
 				return pojo;
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			// Close Statement and Connection
 			if (stmt != null) {
@@ -98,8 +96,6 @@ public abstract class GenericDao<T, ID> {
 				T pojo = getRowMapper().toPojo(rs);
 				result.add(pojo);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} finally {
 			// Close Statement and Connection
 			if (stmt != null) {
