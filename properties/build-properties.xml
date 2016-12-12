@@ -5,6 +5,7 @@
   <property name="JAVA" value="java"/>
 	<property name="war-file-name" value="libmgmt.war"/>
 	<property name="build-directory" value="."/>
+	<property name="lib.dir" value="${build-directory}/lib"/>
 	<property name="build-output-dir" value="${build-directory}/build"/>
 	<property name="classes-directory" value="${build-output-dir}/classes"/>
 	<property name="web-directory" value="WebContent"/>

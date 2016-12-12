@@ -29,8 +29,7 @@
 	</target>
 
 	<target name="jar" depends="compile">
-		<mkdir dir="lib"/>
-		<jar destfile="lib/libmgmt.jar" basedir="classes-directory"/>
+		<jar destfile="${build-output-dir}/libmgmt.jar" basedir="${classes-directory}"/>
 	</target>
 
 	<target name="war" depends="compile">
@@ -38,8 +37,8 @@
 		<delete file="${build-output-dir}/${war-file-name}" />
 		<war warfile="${build-output-dir}/${war-file-name}">
 			<classes dir="${classes-directory}" />
+			<lib dir="${lib.dir}"/>
 			<fileset dir="${web-directory}">
-				<!-- Need to exclude it since webxml is an attribute of the war tag above -->
 			</fileset>
 		</war>
 	</target>
