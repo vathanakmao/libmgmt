@@ -4,8 +4,7 @@
 	<import file="${ANTPROPERTIES}"/>
 
 	<target name="clean">
-		<delete dir="${classes-directory}"/>
-		<delete dir="lib"/>
+		<delete dir="${build-output-dir}"/>
 	</target>
 
 	<target name="zip" description="Package source in zip file">
@@ -22,7 +21,7 @@
 		<mkdir dir="${classes-directory}"/>
 		<echo message="Library Mangement is using ${JAVAC} as Java compiler"/>
 		<javac srcdir="src" destdir="${classes-directory}" fork="yes" executable="${JAVAC}"
-           classpathref="CLASSPATH" debug="on" includeantruntime="false">
+           		classpathref="CLASSPATH" debug="on" includeantruntime="false">
 			<compilerarg value="-Xlint:unchecked"/>
 			<compilerarg value="-Xlint:deprecation"/>
 		</javac>
@@ -88,7 +87,7 @@
 	</target>
 
 	<!-- ============= Tomcat ============= -->
-	
+
 	<path id="catalina-ant-classpath">
 		<fileset dir="${catalina.home}/lib">
 			<include name="catalina-ant.jar"/>
@@ -147,7 +146,12 @@
 			<arg value="${PROPERTIESFILE}"/>
 		</java>
 	</target>
-
+	<target name="run-passwordtest">
+		<java classname="com.vathanakmao.libmgmt.test.util.PasswordTest"
+          classpathref="CLASSPATH" fork="true" dir=".">
+			<arg value="${PROPERTIESFILE}"/>
+		</java>
+	</target>
 	<target name="run-dbutil">
 		<java classname="com.vathanakmao.libmgmt.test.DbUtil"
 	          classpathref="CLASSPATH" fork="true" dir=".">

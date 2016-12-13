@@ -1,0 +1,4 @@
+div.row > label {
+	float: left;
+	width: 150px;
+}
