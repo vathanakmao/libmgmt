@@ -1,4 +1,17 @@
+div.row {
+	width: 500px;
+	height: 30px;	
+}
+
+div.center-text {
+	text-align: center;
+}
+
 div.row > label {
 	float: left;
 	width: 150px;
+}
+
+span.error {
+	color: red;
 }

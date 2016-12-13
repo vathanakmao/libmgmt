@@ -124,7 +124,7 @@
 			/>
 	</target>
 
-	<target name="deploy" description="deploy to tomcat">
+	<target name="deploy" depends="war" description="deploy to tomcat">
 		<echo>deploying from client</echo>
 		<deploy 
 				url="${tomcat-manager-url}"

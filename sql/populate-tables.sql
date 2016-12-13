@@ -8,4 +8,3 @@ insert into librarian values (1, 'Jonh', 'Smith', 'M', now(), now());
 insert into librarian values (2, 'Britney', 'Spear', 'F', now(), now());
 
 /** member */
-insert into member values ('g5938444', 'Vathanak', 'Mao', 'M', now(), now());

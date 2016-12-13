@@ -13,7 +13,7 @@ public class MemberDao extends GenericDao<Member, String> {
 		return new StringBuffer()
 			.append("insert into ")
 			.append(getTableName())
-			.append("(id, first_name, last_name, sex) values ('")
+			.append("(id, first_name, last_name, sex, address, salt, password) values ('")
 			.append(e.getId())
 			.append("','")
 			.append(e.getFirstName())
@@ -21,6 +21,12 @@ public class MemberDao extends GenericDao<Member, String> {
 			.append(e.getLastName())
 			.append("','")
 			.append(e.getSex().toShortString())
+			.append("','")
+			.append(e.getAddress())
+			.append("','")
+			.append(e.getSalt())
+			.append("','")
+			.append(e.getPassword())
 			.append("')")
 			.toString();
 	}

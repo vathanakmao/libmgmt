@@ -33,7 +33,7 @@ public abstract class GenericDao<T, ID> {
 		if (id instanceof String) {
 			sql.append(" where id='").append(id).append("'");
 		} else if (id instanceof Long || id instanceof Integer) {
-			sql.append("where id=").append(id);
+			sql.append(" where id=").append(id);
 		} else {
 			throw new IllegalArgumentException(id + " is of unmapped type");
 		}
@@ -57,11 +57,16 @@ public abstract class GenericDao<T, ID> {
 	    Properties connectionProps = new Properties();
 	    connectionProps.put("user", "root");
 	    connectionProps.put("password", "root");
-	    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/libmgmt", connectionProps);
+	    
+	    // Error "no suitable driver found" occurred only when running in tomcat7
+	    // and this line fixed the error.
+	    DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+	    
+	    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/libmgmt?useUnicode=true&characterEncoding=utf-8", connectionProps);
 	    return conn;
 	}
 	
-	public T getById(ID id) throws SQLException  {
+	public T getById(ID id)  {
 		PreparedStatement stmt = null;
 		Connection conn = null;
 		try {
@@ -72,19 +77,30 @@ public abstract class GenericDao<T, ID> {
 				T pojo = getRowMapper().toPojo(rs);
 				return pojo;
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
 		} finally {
 			// Close Statement and Connection
 			if (stmt != null) {
-				stmt.close();
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 			if (conn != null) {
-				conn.close();
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return null;
 	}
 	
-	public List<T> getBy(String columnName, Object columnValue) throws SQLException {
+	public List<T> getBy(String columnName, Object columnValue) {
 		List<T> result = new ArrayList<T>();
 		PreparedStatement stmt = null;
 		Connection conn = null;
@@ -96,24 +112,48 @@ public abstract class GenericDao<T, ID> {
 				T pojo = getRowMapper().toPojo(rs);
 				result.add(pojo);
 			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
 		} finally {
 			// Close Statement and Connection
 			if (stmt != null) {
-				stmt.close();
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 			if (conn != null) {
-				conn.close();
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		return result;
 	}
 	
-	public void save(T e) throws SQLException {
+	public void save(T e) {
 		String query = generateSqlInsert(e);
-		Connection conn = getConnection();
-		PreparedStatement stmt = conn.prepareStatement(query);
-		stmt.execute();
-		conn.close();
+		Connection conn = null;
+		PreparedStatement stmt;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(query);
+			stmt.execute();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			throw new RuntimeException(e1);
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 	
 }

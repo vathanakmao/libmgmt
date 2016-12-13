@@ -4,6 +4,9 @@ create table member(
 	first_name varchar(128) not null,
 	last_name varchar(128) not null,
 	sex enum('M', 'F') not null,
+	address varchar(255) not null,
+	salt varchar(64) not null,
+	password varchar(255) not null,
 	date_created timestamp not null,
 	date_updated timestamp not null,
 	primary key (id)

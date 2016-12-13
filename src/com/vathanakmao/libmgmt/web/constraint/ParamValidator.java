@@ -5,11 +5,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ParamValidator {
+public abstract class ParamValidator {
 	private static final String ATTRIBUTE_ERROR = "errors";
+	
+	public abstract boolean validate(HttpServletRequest request);
 
 	@SuppressWarnings("unchecked")
-	public boolean validate(String paramName, HttpServletRequest req, ParamConstraint ... constraints) {
+	protected boolean validate(String paramName, HttpServletRequest req, ParamConstraint ... constraints) {
 		Map<String,String> errors = (Map<String, String>) req.getAttribute(ATTRIBUTE_ERROR);
 		if (errors == null) {
 			errors = new HashMap<String,String>();
@@ -25,5 +27,15 @@ public class ParamValidator {
 			}
 		}
 		return true;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void addError(String name, String message, HttpServletRequest req) {
+		Map<String,String> errors = (Map<String, String>) req.getAttribute(ATTRIBUTE_ERROR);
+		if (errors == null) {
+			errors = new HashMap<String,String>();
+		}
+		errors.put(name, message);
+		req.setAttribute(ATTRIBUTE_ERROR, errors);
 	}
 }
