@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project name="Library Management" default="all" basedir=".">
-	<property name="ANTPROPERTIES" value="properties/build-properties.xml"/>
+	<property name="ANTPROPERTIES" value="config/build-properties.xml"/>
 	<import file="${ANTPROPERTIES}"/>
 
 	<target name="clean">
@@ -27,13 +27,10 @@
 		</javac>
 	</target>
 
-	<target name="jar" depends="compile">
-		<jar destfile="${build-output-dir}/libmgmt.jar" basedir="${classes-directory}"/>
-	</target>
-
 	<target name="war" depends="compile">
 		<mkdir dir="${build-output-dir}" />
 		<delete file="${build-output-dir}/${war-file-name}" />
+		<copydir src="${config.dir}" dest="${classes-directory}"></copydir>
 		<war warfile="${build-output-dir}/${war-file-name}">
 			<classes dir="${classes-directory}" />
 			<lib dir="${lib.dir}"/>
@@ -142,7 +139,7 @@
 
 	<target name="run">
 		<java classname="com.vathanakmao.libmgmt.test.HelloWorld"
-          classpathref="CLASSPATH" fork="true" dir=".">
+          		classpathref="CLASSPATH" fork="true" dir=".">
 			<arg value="${PROPERTIESFILE}"/>
 		</java>
 	</target>

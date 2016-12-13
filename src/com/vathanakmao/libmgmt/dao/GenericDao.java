@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.vathanakmao.libmgmt.AppContext;
+
 public abstract class GenericDao<T, ID> {
 	private String tableName;
 	private RowMapper<T> rowMapper;
@@ -55,14 +57,17 @@ public abstract class GenericDao<T, ID> {
 	protected Connection getConnection() throws SQLException {
 	    Connection conn = null;
 	    Properties connectionProps = new Properties();
-	    connectionProps.put("user", "root");
-	    connectionProps.put("password", "root");
+	    connectionProps.put("user", AppContext.getInstance().getProperty("user_name"));
+	    connectionProps.put("password", AppContext.getInstance().getProperty("password"));
 	    
 	    // Error "no suitable driver found" occurred only when running in tomcat7
 	    // and this line fixed the error.
 	    DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 	    
-	    conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/libmgmt?useUnicode=true&characterEncoding=utf-8", connectionProps);
+	    String serverName = AppContext.getInstance().getProperty("server_name");
+	    String dbName = AppContext.getInstance().getProperty("database_name");
+	    String portNumber = AppContext.getInstance().getProperty("port_number");
+	    conn = DriverManager.getConnection("jdbc:mysql://" + serverName + ":" + portNumber + "/" + dbName + "?useUnicode=true", connectionProps);
 	    return conn;
 	}
 	

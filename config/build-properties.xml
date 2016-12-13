@@ -9,15 +9,17 @@
 	<property name="build-output-dir" value="${build-directory}/build"/>
 	<property name="classes-directory" value="${build-output-dir}/classes"/>
 	<property name="web-directory" value="WebContent"/>
+	<property name="config.dir" value="config"/>
 	
 	<!-- ======= Tomcat ======= -->
 	<property name="catalina.home" value="/usr/local/apache-tomcat-7.0.73"/>
 
-  <property name="PROPERTIESFILE" value="properties/db-properties.xml"/>
+  <property name="PROPERTIESFILE" value="config/db-properties.xml"/>
 
   <path id="CLASSPATH">
   	<fileset dir="${lib.dir}"></fileset>
     <pathelement location="${classes-directory}"/>
+    <pathelement location="${config.dir}"/>
   </path>
 
   <property name="DB.DRIVER" value="com.mysql.jdbc.Driver"/>

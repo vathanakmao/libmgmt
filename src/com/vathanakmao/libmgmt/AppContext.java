@@ -1,7 +1,11 @@
 package com.vathanakmao.libmgmt;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import com.vathanakmao.libmgmt.dao.MemberDao;
 import com.vathanakmao.libmgmt.service.MemberService;
@@ -9,6 +13,7 @@ import com.vathanakmao.libmgmt.service.MemberService;
 public class AppContext {
 	private static AppContext instance;
 	private Map<String, Object> components;
+	private Properties properties;
 
 	private MemberService memberService;
 	private MemberDao memberDao;
@@ -25,6 +30,24 @@ public class AppContext {
 		components = new HashMap<String, Object>();
 		components.put("memberDao", memberDao);
 		components.put("memberService", memberService);
+		
+		// Initialize properties
+//		InputStream in = AppContext.class.getResourceAsStream("config/db.properties");
+		InputStream in = null;
+		try {
+			in = AppContext.class.getResourceAsStream("/db-properties.xml");
+			properties = new Properties();
+			properties.loadFromXML(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				in.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 	public static AppContext getInstance() {
@@ -40,5 +63,13 @@ public class AppContext {
 
 	public Object getComponent(String name) {
 		return getComponents().get(name);
+	}
+	
+	public String getProperty(String name) {
+		return (String) getInstance().getProperties().get(name);
+	}
+	
+	public Properties getProperties() {
+		return properties;
 	}
 }

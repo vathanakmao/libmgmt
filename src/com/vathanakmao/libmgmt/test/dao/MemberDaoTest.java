@@ -3,8 +3,11 @@ package com.vathanakmao.libmgmt.test.dao;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.Properties;
 
+import com.vathanakmao.libmgmt.AppContext;
 import com.vathanakmao.libmgmt.dao.MemberDao;
 import com.vathanakmao.libmgmt.dao.MemberRowMapper;
 import com.vathanakmao.libmgmt.model.Member;
@@ -23,6 +26,16 @@ public class MemberDaoTest {
 		test.testSave();
 //		test.testGetById();
 //		test.testGetByColumnName();
+	}
+	
+	public void testLoadProperties() {
+		Properties properties = AppContext.getInstance().getProperties();
+		Enumeration enuKeys = properties.keys();
+		while (enuKeys.hasMoreElements()) {
+			String key = (String) enuKeys.nextElement();
+			String value = properties.getProperty(key);
+			System.out.println(key + ": " + value);
+		}
 	}
 	
 	public void testGetById() throws SQLException {

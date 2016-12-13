@@ -7,4 +7,5 @@
   <entry key="password">root</entry>
   <entry key="server_name">localhost</entry>
   <entry key="port_number">3306</entry>
+  <entry key="db.conn.url">jdbc:mysql://${server_name}:${port_number}/${database_name}?useUnicode=true</entry>
 </properties>
