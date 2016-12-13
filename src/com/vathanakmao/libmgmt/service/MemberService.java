@@ -2,7 +2,6 @@ package com.vathanakmao.libmgmt.service;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 
 import com.vathanakmao.libmgmt.dao.MemberDao;
 import com.vathanakmao.libmgmt.exception.AlreadyExistsException;
