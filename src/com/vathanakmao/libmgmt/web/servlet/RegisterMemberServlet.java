@@ -36,6 +36,7 @@ public class RegisterMemberServlet extends HttpServlet {
 		member.setFirstName(req.getParameter("firstName"));
 		member.setLastName(req.getParameter("lastName"));
 		member.setSex(Sex.fromString(req.getParameter("sex")));
+		member.setAddress(req.getParameter("address"));
 		member.setPassword(req.getParameter("password"));
 		try {
 			service.register(member);

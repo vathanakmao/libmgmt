@@ -35,7 +35,7 @@ Member member = service.getMemberDao().getById((String) request.getSession().get
 			<label>Sex: </label> <%= member.getSex() %>
 		</div>
 		<div class="row">
-			<label>Address:</label> <%= member.getAddress() %>"
+			<label>Address:</label> <%= member.getAddress() %>
 		</div>
 	</body>
 </html>
