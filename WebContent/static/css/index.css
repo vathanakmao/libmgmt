@@ -3,6 +3,10 @@ div.row {
 	height: 30px;	
 }
 
+div.menu {
+	text-align: right;
+}
+
 div.center-text {
 	text-align: center;
 }

@@ -1,0 +1,14 @@
+<div class="menu">
+	<%
+	if(!"memberProfile".equals(request.getAttribute("curPage"))) {
+	%>
+		<span><a href="memberProfile.jsp">Profile</a></span>
+		<span> | </span>
+	<%	
+	}
+	%>
+	
+	<span>Member: <%= request.getSession().getAttribute("memberId") %></span>
+	<span> | </span>
+	<span><a href="logoutMember">Logout</a></span>
+</div>
