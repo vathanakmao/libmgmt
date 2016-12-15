@@ -28,9 +28,14 @@
 		} 
 		%>
 		</span>
+		<span> | </span>
+		<span><a href="logoutMember">Logout</a></span>
+	<%
+	} else {
+	%>
+	<span> | </span>
+	<span><a href="loginMember.jsp">Login</a></span>
 	<%
 	}
 	%>
-	<span> | </span>
-	<span><a href="logoutMember">Logout</a></span>
 </div>

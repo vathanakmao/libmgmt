@@ -28,7 +28,7 @@
   	<filter-class>com.vathanakmao.libmgmt.web.filter.LoginMemberFilter</filter-class>
   	<init-param>
   		<param-name>ignored-paths</param-name>
-  		<param-value>/static/,/loginMember.jsp,/registerMember.jsp,/loginMember,/registerMember</param-value>
+  		<param-value>/static/,/loginMember.jsp,/registerMember.jsp,/loginMember,/registerMember,/books.jsp</param-value>
   	</init-param>
   </filter>
   <filter-mapping>
@@ -36,6 +36,7 @@
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
   
+  <!-- ========== Servlets ========== -->
   
   <servlet>
   	<servlet-name>RegisterMember</servlet-name>
@@ -53,6 +54,15 @@
   <servlet-mapping>
   	<servlet-name>LoginMember</servlet-name>
   	<url-pattern>/loginMember</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>LogoutMember</servlet-name>
+  	<servlet-class>com.vathanakmao.libmgmt.web.servlet.LogoutMemberServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>LogoutMember</servlet-name>
+  	<url-pattern>/logoutMember</url-pattern>
   </servlet-mapping>
 
 </web-app>
