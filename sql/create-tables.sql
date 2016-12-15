@@ -14,10 +14,10 @@ create table member(
 
 create table book (
 	id bigint not null,
-	ddc varchar(45) not null,
+	code varchar(45) not null,
 	title varchar(255) not null,
 	author varchar(128) not null,
-	year_published smallint not null,
+	year smallint not null,
 	primary key (id)
 ) engine=innodb default charset=utf8;
 

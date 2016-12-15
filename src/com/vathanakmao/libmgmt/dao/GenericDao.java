@@ -54,6 +54,16 @@ public abstract class GenericDao<T, ID> {
 		return sql.toString();
 	}
 	
+	protected String generateSqlSelectWhereColumnLike(String colName, Object colValue) {
+		StringBuffer sql = new StringBuffer("select * from ").append(getTableName());
+		if (colValue instanceof String) {
+			sql.append(" where ").append(colName).append(" LIKE '%").append(colValue).append("%'");
+		} else {
+			throw new IllegalArgumentException(colValue + " is of unmapped type");
+		}
+		return sql.toString();
+	}
+	
 	protected Connection getConnection() throws SQLException {
 	    Connection conn = null;
 	    Properties connectionProps = new Properties();
@@ -112,6 +122,41 @@ public abstract class GenericDao<T, ID> {
 		try {
 			conn = getConnection();
 			stmt = conn.prepareStatement(generateSqlSelectWhereColumnEquals(columnName, columnValue));
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				T pojo = getRowMapper().toPojo(rs);
+				result.add(pojo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} finally {
+			// Close Statement and Connection
+			if (stmt != null) {
+				try {
+					stmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return result;
+	}
+	
+	public List<T> findLike(String columnName, String columnValue) {
+		List<T> result = new ArrayList<T>();
+		PreparedStatement stmt = null;
+		Connection conn = null;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(generateSqlSelectWhereColumnLike(columnName, columnValue));
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				T pojo = getRowMapper().toPojo(rs);

@@ -1,13 +1,14 @@
 package com.vathanakmao.libmgmt;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import com.vathanakmao.libmgmt.dao.BookDao;
 import com.vathanakmao.libmgmt.dao.MemberDao;
+import com.vathanakmao.libmgmt.service.BookService;
 import com.vathanakmao.libmgmt.service.MemberService;
 
 public class AppContext {
@@ -16,20 +17,25 @@ public class AppContext {
 	private Properties properties;
 
 	private MemberService memberService;
+	private BookService bookService;
 	private MemberDao memberDao;
+	private BookDao bookDao;
 
 	protected AppContext() {
 		// Initialize DAOs
 		memberDao = new MemberDao();
+		bookDao = new BookDao();
 
 		// Initialize services
-		memberService = new MemberService();
-		memberService.setMemberDao(memberDao);
+		memberService = new MemberService(memberDao);
+		bookService = new BookService(bookDao);
 		
 		// Initialize components
 		components = new HashMap<String, Object>();
 		components.put("memberDao", memberDao);
+		components.put("bookDao", bookDao);
 		components.put("memberService", memberService);
+		components.put("bookService", bookService);
 		
 		// Initialize properties
 //		InputStream in = AppContext.class.getResourceAsStream("config/db.properties");

@@ -11,6 +11,10 @@ import com.vathanakmao.libmgmt.util.SecurityUtil;
 
 public class MemberService {
 	private MemberDao memberDao;
+	
+	public MemberService(MemberDao memberDao) {
+		this.memberDao = memberDao;
+	}
 
 	public MemberDao getMemberDao() {
 		return memberDao;
