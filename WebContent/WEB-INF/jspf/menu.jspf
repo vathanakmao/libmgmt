@@ -1,17 +1,36 @@
+<%@ page import="com.vathanakmao.libmgmt.util.WebUtil" %>
 <div class="menu">
-	<span>
-		<% 
-		if(!"memberProfile".equals(request.getAttribute("curPage"))) {
+	<%
+	String curPage = (String) request.getAttribute("curPage");
+	if (!"home".equals(curPage)) {
+	%>
+		<span><a href="books.jsp">Home</a></span>
+	<%
+	} else {
+	%>
+		<span>Home</span>
+	<%
+	}
+	if (WebUtil.isMemberLoggedIn(request)) {
+	%>
+		<span> | </span>
+		<span>
+		<%
+		if(!"memberProfile".equals(curPage)) {
 		%>
 			<a href="memberProfile.jsp">Member(<%= request.getSession().getAttribute("memberId") %>)</a>
 		<% 
 		} else { 
 		%>
+		
 			Member(<%= request.getSession().getAttribute("memberId") %>)
 		<% 
 		} 
 		%>
-	</span>
+		</span>
+	<%
+	}
+	%>
 	<span> | </span>
 	<span><a href="logoutMember">Logout</a></span>
 </div>
