@@ -16,7 +16,7 @@
 				<input type="text" name="book"/>
 			</div>
 			<div class="row">
-				<label>&nbsp;</label>
+				<label>&nbsp;</label>Œp
 				<input type="radio" name="field" value="title" checked="checked"/>Title
 				<input type="radio" name="field" value="code"/>Code
 				<input type="radio" name="field" value="author"/>Author

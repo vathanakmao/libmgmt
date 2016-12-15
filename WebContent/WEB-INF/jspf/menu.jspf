@@ -4,7 +4,7 @@
 	String curPage = (String) request.getAttribute("curPage");
 	if (!"home".equals(curPage)) {
 	%>
-		<span><a href="books.jsp">Home</a></span>
+		<span><a href="searchBooks.jsp">Home</a></span>
 	<%
 	} else {
 	%>
