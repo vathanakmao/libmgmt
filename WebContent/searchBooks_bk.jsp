@@ -36,32 +36,36 @@
 			</div>
 		</form>
 		<div class="row">
-			<c:choose>
-				<c:when test="${books != null && books.size() == 0}">
+			<%
+			List<Book> books = (List<Book>) request.getAttribute("books");
+			if (books != null) {
+				if (books.size() == 0) {
+			%>
 					<div class="row">
 						<hr/>
 						<h3>Not found</h3>
 					</div>
-				</c:when>
-				<c:when test="${books != null && books.size() > 0}">
+				<%					
+				} else {
+				%>
 					<div class="row">
 						<hr/>
-						<h3>Result (${books.size()})</h3>
+						<h3>Result (<%= books.size() %>)</h3>
 					</div>
-					<c:set var="index" scope="page" value="1"/>
-					<c:forEach var="book" items="${books}">
+				<%
+					int i = 1;
+					for (Book book : books) {
+				%>
 						<div class="row">
 							<span class="result-item">
-								<a href="getBookDetails?id=${book.id}">${index}). [${book.code}] "${book.title}" - ${book.author} - ${book.year}</a>
+								<a href="getBookDetails?id=<%= book.getId() %>"><%= i %>). [<%= book.getCode() %>] "<%= book.getTitle() %>" - <%= book.getAuthor() %> - <%= book.getYear() %></a>
 							</span>
 						</div>
-						<c:set var="index" value="${index+1}"/>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<h2>hello</h2>
-				</c:otherwise>
-			</c:choose>
+			<%	
+					}
+				}
+			} 
+			%>
 		</div>
 	</body>
 </html>

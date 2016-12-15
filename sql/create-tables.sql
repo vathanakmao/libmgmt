@@ -18,6 +18,7 @@ create table book (
 	title varchar(255) not null,
 	author varchar(128) not null,
 	year smallint not null,
+	stock smallint not null,
 	primary key (id)
 ) engine=innodb default charset=utf8;
 
