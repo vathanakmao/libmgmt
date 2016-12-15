@@ -61,6 +61,8 @@ public class MemberDaoTest {
 		dao.save(e);
 		
 		Member m = dao.getById(e.getId());
+		System.out.println(">> Salt: " + e.getSalt());
+		System.out.println(">> Password: " + e.getPassword());
 		System.out.println(">> Passwords match: " + SecurityUtil.hashMD5("12345A", e.getSalt()).equals(m.getPassword()));
 
 	}
