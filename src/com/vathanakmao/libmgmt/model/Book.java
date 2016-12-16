@@ -6,6 +6,7 @@ public class Book {
 	private String title;
 	private String author;
 	private Integer year;
+	private Integer stock;
 
 	public String getId() {
 		return id;
@@ -45,6 +46,14 @@ public class Book {
 
 	public void setYear(Integer year) {
 		this.year = year;
+	}
+
+	public Integer getStock() {
+		return stock;
+	}
+
+	public void setStock(Integer stock) {
+		this.stock = stock;
 	}
 
 }

@@ -11,6 +11,7 @@ public class BookRowMapper extends RowMapper<Book> {
 	public static final String COLUMN_TITLE = "title";
 	public static final String COLUMN_AUTHOR = "author";
 	public static final String COLUMN_YEAR = "year";
+	public static final String COLUMN_STOCK = "stock";
 	
 
 	@Override
@@ -21,6 +22,7 @@ public class BookRowMapper extends RowMapper<Book> {
 		pojo.setTitle(rs.getString(COLUMN_TITLE));
 		pojo.setAuthor(rs.getString(COLUMN_AUTHOR));
 		pojo.setYear(rs.getInt(COLUMN_YEAR));
+		pojo.setStock(rs.getInt(COLUMN_STOCK));
 		return pojo;
 	}
 

@@ -19,15 +19,12 @@
 				<input type="text" name="text" value="${param.text}"/>
 				<span class="error">${errors["text"]}</span>
 			</div>
-			<%
-				String field = request.getParameter("field");
-			%>
 			<div class="row">
 				<label>&nbsp;</label>
-				<input type="radio" name="field" value="1" <% if(field==null || field.equals("1")) out.print("checked"); %>/>Title
-				<input type="radio" name="field" value="2" <% if("2".equals(field)) out.print("checked"); %>/>Code
-				<input type="radio" name="field" value="3" <% if("3".equals(field)) out.print("checked"); %>/>Author
-				<input type="radio" name="field" value="4" <% if("4".equals(field)) out.print("checked"); %>/>Year
+				<input type="radio" name="field" value="1" ${param.field == null || param.field.equals("1") ? "checked" : ""}/>Title
+				<input type="radio" name="field" value="2" ${"2" == param.field ? "checked" : ""}/>Code
+				<input type="radio" name="field" value="3" ${"3" == param.field ? "checked" : ""}/>Author
+				<input type="radio" name="field" value="4" ${"4" == param.field ? "checked" : ""}/>Year
 				<span class="error">${errors["field"]}</span>
 			</div>
 			<div class="row">
@@ -49,18 +46,32 @@
 						<h3>Result (${books.size()})</h3>
 					</div>
 					<c:set var="index" scope="page" value="1"/>
-					<c:forEach var="book" items="${books}">
-						<div class="row">
-							<span class="result-item">
-								<a href="getBookDetails?id=${book.id}">${index}). [${book.code}] "${book.title}" - ${book.author} - ${book.year}</a>
-							</span>
-						</div>
-						<c:set var="index" value="${index+1}"/>
-					</c:forEach>
+					<table border="1">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Code</th>
+								<th>Title</th>
+								<th>Author</th>
+								<th>Year</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="book" items="${books}">
+								<tr>
+									<td>${index}</td>
+									<td>${book.code}</td>
+									<td>${book.title}</td>
+									<td>${book.author}</td>
+									<td>${book.year}</td>
+									<td>${book.stock == 0 ? "Borrowed" : "Available"}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<c:set var="index" value="${index+1}"/>
 				</c:when>
-				<c:otherwise>
-					<h2>hello</h2>
-				</c:otherwise>
 			</c:choose>
 		</div>
 	</body>

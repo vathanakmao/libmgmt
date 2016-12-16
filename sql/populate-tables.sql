@@ -1,7 +1,7 @@
 /** book */
-insert into book values (1, '111', 'Java Programming', 'Vathanak Mao', 2017);
-insert into book values (2, '222', '.Net Programming', 'Vathanak Mao', 2018);
-insert into book values (3, '333', 'Data Structure', 'Sok San', 2019);
+insert into book values (1, '111', 'Java Programming', 'Vathanak Mao', 2017, 0);
+insert into book values (2, '222', '.Net Programming', 'Vathanak Mao', 2018, 1);
+insert into book values (3, '333', 'Data Structure', 'Sok San', 2019, 2);
 
 /** librarian */
 insert into librarian values (1, 'Jonh', 'Smith', 'M', now(), now());
