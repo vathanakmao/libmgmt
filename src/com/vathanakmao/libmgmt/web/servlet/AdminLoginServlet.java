@@ -10,40 +10,40 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.vathanakmao.libmgmt.AppContext;
 import com.vathanakmao.libmgmt.exception.NotFoundException;
-import com.vathanakmao.libmgmt.model.Member;
-import com.vathanakmao.libmgmt.service.MemberService;
+import com.vathanakmao.libmgmt.model.Librarian;
+import com.vathanakmao.libmgmt.service.LibrarianService;
 import com.vathanakmao.libmgmt.util.WebUtil;
 import com.vathanakmao.libmgmt.web.constraint.ParamValidator;
-import com.vathanakmao.libmgmt.web.validator.LoginMemberValidator;
+import com.vathanakmao.libmgmt.web.validator.AdminLoginValidator;
 
-public class LoginMemberServlet extends HttpServlet {
-	private MemberService service;
+public class AdminLoginServlet extends HttpServlet {
+	private LibrarianService service;
 	
-	public LoginMemberServlet() {
-		service = (MemberService) AppContext.getInstance().getComponent("memberService");
+	public AdminLoginServlet() {
+		service = (LibrarianService) AppContext.getInstance().getComponent("librarianService");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (!new LoginMemberValidator().validate(req)) {
-			WebUtil.forward("loginMember.jsp", req, resp);
+		if (!new AdminLoginValidator().validate(req)) {
+			WebUtil.forward("_admin/login.jsp", req, resp);
 		    return;
 		}
 
-		final String id = req.getParameter("id");
+		final String username = req.getParameter("username");
 		final String plainPassword = req.getParameter("password");
 		try {
-			Member member = service.login(id, plainPassword);
-			if (member != null) {
-				WebUtil.createMemberSession(id, req);
-				WebUtil.redirect("memberProfile.jsp", req, resp);
+			Librarian librarian = service.login(username, plainPassword);
+			if (librarian != null) {
+				WebUtil.createLibrarianSession(username, req);
+				WebUtil.redirect("_admin/profile.jsp", req, resp);
 			} else {
 				ParamValidator.addError("unknown", "Invalid Password" , req);
-				WebUtil.forward("loginMember.jsp", req, resp);
+				WebUtil.forward("_admin/login.jsp", req, resp);
 			}
 		} catch (NotFoundException e) {
 			ParamValidator.addError("unknown", e.getMessage(), req);
-			WebUtil.forward("loginMember.jsp", req, resp);
+			WebUtil.forward("_admin/login.jsp", req, resp);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			resp.sendError(500, e.getMessage());

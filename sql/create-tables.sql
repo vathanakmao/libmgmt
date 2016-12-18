@@ -23,10 +23,13 @@ create table book (
 ) engine=innodb default charset=utf8;
 
 create table librarian (
-	id int not null,
+	id int not null auto_increment,
+	username varchar(128) not null,
 	first_name varchar(128) not null,
 	last_name varchar(128) not null,
 	sex enum('M', 'F') not null,
+	salt varchar(128) not null, 
+	password varchar(255) not null,
 	date_created timestamp not null,
 	date_updated timestamp not null,
 	primary key (id)

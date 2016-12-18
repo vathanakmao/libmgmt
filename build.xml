@@ -137,25 +137,25 @@
 
 	<!-- ============= Run test classes ============= -->
 
-	<target name="run">
+	<target name="run" depends="compile">
 		<java classname="com.vathanakmao.libmgmt.test.HelloWorld"
           		classpathref="CLASSPATH" fork="true" dir=".">
 			<arg value="${PROPERTIESFILE}"/>
 		</java>
 	</target>
-	<target name="run-passwordtest">
+	<target name="run-passwordtest" depends="compile">
 		<java classname="com.vathanakmao.libmgmt.test.util.PasswordTest"
           classpathref="CLASSPATH" fork="true" dir=".">
 			<arg value="${PROPERTIESFILE}"/>
 		</java>
 	</target>
-	<target name="run-dbutil">
+	<target name="run-dbutil" depends="compile">
 		<java classname="com.vathanakmao.libmgmt.test.DbUtil"
 	          classpathref="CLASSPATH" fork="true" dir=".">
 			<arg value="${PROPERTIESFILE}"/>
 		</java>
 	</target>
-	<target name="run-memberdao">
+	<target name="run-memberdao" depends="compile">
 		<java classname="com.vathanakmao.libmgmt.test.dao.MemberDaoTest"
 		          classpathref="CLASSPATH" fork="true" dir=".">
 			<arg value="${PROPERTIESFILE}"/>

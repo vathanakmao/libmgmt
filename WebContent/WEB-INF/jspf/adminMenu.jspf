@@ -1,0 +1,43 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.vathanakmao.libmgmt.util.WebUtil" %>
+
+<div class="menu">
+	<%
+	String curPage = (String) request.getAttribute("curPage");
+	if (!"home".equals(curPage)) {
+	%>
+		<span><a href="borrowBooks.jsp">Borrow</a></span>
+	<%
+	} else {
+	%>
+		<span>Borrow</span>
+	<%
+	}
+	if (WebUtil.isAdminLoggedIn(request)) {
+	%>
+		<span> | </span>
+		<span>
+		<%
+		if(!"librarianProfile".equals(curPage)) {
+		%>
+			<a href="profile.jsp"><%= request.getSession().getAttribute("librarianUsername") %></a>
+		<% 
+		} else { 
+		%>
+		
+			<%= request.getSession().getAttribute("librarianUsername") %>
+		<% 
+		} 
+		%>
+		</span>
+		<span> | </span>
+		<span><a href="logout">Logout</a></span>
+	<%
+	} else {
+	%>
+	<span> | </span>
+	<span><a href="login.jsp">Login</a></span>
+	<%
+	}
+	%>
+</div>

@@ -150,6 +150,14 @@ public abstract class GenericDao<T, ID> {
 		return result;
 	}
 	
+	public T getUniqueBy(String columnName, Object columnValue) {
+		List<T> result = getBy(columnName, columnValue);
+		if (!result.isEmpty()) {
+			return result.get(0);
+		}
+		return null;
+	}
+	
 	public List<T> findLike(String columnName, String columnValue) {
 		List<T> result = new ArrayList<T>();
 		PreparedStatement stmt = null;

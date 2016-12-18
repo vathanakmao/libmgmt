@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.vathanakmao.libmgmt.util.WebUtil;
 
-public class LoginMemberFilter implements Filter {
+public class AdminLoginFilter implements Filter {
 	private List<String> ignoredPaths;
 	
 	@Override
@@ -47,8 +47,8 @@ public class LoginMemberFilter implements Filter {
 		}
 		System.out.println(">> isIgnoredPath: " + isIgnoredPath);
 		
-		if (!isIgnoredPath && !WebUtil.isMemberLoggedIn(req)) {
-        	WebUtil.redirect("loginMember.jsp", req, resp);
+		if (!isIgnoredPath && !WebUtil.isAdminLoggedIn(req)) {
+        	WebUtil.redirect("/_admin/login.jsp", req, resp);
         } else {
         	chain.doFilter(req, resp);
         }

@@ -7,8 +7,10 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.vathanakmao.libmgmt.dao.BookDao;
+import com.vathanakmao.libmgmt.dao.LibrarianDao;
 import com.vathanakmao.libmgmt.dao.MemberDao;
 import com.vathanakmao.libmgmt.service.BookService;
+import com.vathanakmao.libmgmt.service.LibrarianService;
 import com.vathanakmao.libmgmt.service.MemberService;
 
 public class AppContext {
@@ -18,24 +20,30 @@ public class AppContext {
 
 	private MemberService memberService;
 	private BookService bookService;
+	private LibrarianService librarianService;
 	private MemberDao memberDao;
 	private BookDao bookDao;
+	private LibrarianDao librarianDao;
 
 	protected AppContext() {
 		// Initialize DAOs
 		memberDao = new MemberDao();
 		bookDao = new BookDao();
+		librarianDao = new LibrarianDao();
 
 		// Initialize services
 		memberService = new MemberService(memberDao);
 		bookService = new BookService(bookDao);
+		librarianService = new LibrarianService(librarianDao);
 		
 		// Initialize components
 		components = new HashMap<String, Object>();
 		components.put("memberDao", memberDao);
 		components.put("bookDao", bookDao);
+		components.put("librarianDao", librarianDao);
 		components.put("memberService", memberService);
 		components.put("bookService", bookService);
+		components.put("librarianService", librarianService);
 		
 		// Initialize properties
 //		InputStream in = AppContext.class.getResourceAsStream("config/db.properties");

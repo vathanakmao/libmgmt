@@ -15,6 +15,6 @@ public class LogoutMemberServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getSession().invalidate();
 		req.getSession().removeAttribute("memberId");
-		WebUtil.redirect("searchBooks.jsp", resp);
+		WebUtil.redirect("searchBooks.jsp", req, resp);
 	}
 }

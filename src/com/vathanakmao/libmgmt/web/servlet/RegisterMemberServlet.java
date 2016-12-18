@@ -40,7 +40,7 @@ public class RegisterMemberServlet extends HttpServlet {
 		member.setPassword(req.getParameter("password"));
 		try {
 			service.register(member);
-			WebUtil.redirect("registrationSuccess.jsp", resp);
+			WebUtil.redirect("registrationSuccess.jsp", req, resp);
 		} catch (AlreadyExistsException e) {
 			ParamValidator.addError("unknown", e.getMessage(), req);
 			WebUtil.forward("registerMember.jsp", req, resp);
