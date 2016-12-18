@@ -69,10 +69,10 @@ List<BorrowedBookVo> borrowedBooks = borrowService.getBorrowedBooks(member.getId
 								<td>${borrowedBook.book.year}</td>
 								<td>${borrowedBook.borrow.dateBorrowed}</td>
 							</tr>
+							<c:set var="index" value="${index+1}"/>
 						</c:forEach>
 					</tbody>
 				</table>
-				<c:set var="index" value="${index+1}"/>
 			</c:if>
 		</div>
 	</body>
