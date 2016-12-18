@@ -11,6 +11,7 @@ import com.vathanakmao.libmgmt.dao.BorrowDao;
 import com.vathanakmao.libmgmt.dao.LibrarianDao;
 import com.vathanakmao.libmgmt.dao.MemberDao;
 import com.vathanakmao.libmgmt.service.BookService;
+import com.vathanakmao.libmgmt.service.BorrowService;
 import com.vathanakmao.libmgmt.service.LibrarianService;
 import com.vathanakmao.libmgmt.service.MemberService;
 
@@ -22,6 +23,7 @@ public class AppContext {
 	private MemberService memberService;
 	private BookService bookService;
 	private LibrarianService librarianService;
+	private BorrowService borrowService;
 	private MemberDao memberDao;
 	private BookDao bookDao;
 	private LibrarianDao librarianDao;
@@ -38,6 +40,7 @@ public class AppContext {
 		memberService = new MemberService(memberDao);
 		bookService = new BookService(bookDao);
 		librarianService = new LibrarianService(librarianDao, memberDao, bookDao, borrowDao);
+		borrowService = new BorrowService(borrowDao, bookDao);
 		
 		// Initialize components
 		components = new HashMap<String, Object>();
@@ -48,6 +51,7 @@ public class AppContext {
 		components.put("memberService", memberService);
 		components.put("bookService", bookService);
 		components.put("librarianService", librarianService);
+		components.put("borrowService", borrowService);
 		
 		// Initialize properties
 //		InputStream in = AppContext.class.getResourceAsStream("config/db.properties");
