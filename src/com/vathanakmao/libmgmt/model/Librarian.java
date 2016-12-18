@@ -1,7 +1,7 @@
 package com.vathanakmao.libmgmt.model;
 
 public class Librarian {
-	private String id;
+	private Integer id;
 	private String username;
 	private String firstName;
 	private String lastName;
@@ -9,11 +9,11 @@ public class Librarian {
 	private String password;
 	private String salt;
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

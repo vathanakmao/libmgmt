@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.vathanakmao.libmgmt.dao.BookDao;
+import com.vathanakmao.libmgmt.dao.BorrowDao;
 import com.vathanakmao.libmgmt.dao.LibrarianDao;
 import com.vathanakmao.libmgmt.dao.MemberDao;
 import com.vathanakmao.libmgmt.service.BookService;
@@ -24,23 +25,26 @@ public class AppContext {
 	private MemberDao memberDao;
 	private BookDao bookDao;
 	private LibrarianDao librarianDao;
+	private BorrowDao borrowDao;
 
 	protected AppContext() {
 		// Initialize DAOs
 		memberDao = new MemberDao();
 		bookDao = new BookDao();
 		librarianDao = new LibrarianDao();
+		borrowDao = new BorrowDao();
 
 		// Initialize services
 		memberService = new MemberService(memberDao);
 		bookService = new BookService(bookDao);
-		librarianService = new LibrarianService(librarianDao);
+		librarianService = new LibrarianService(librarianDao, memberDao, bookDao, borrowDao);
 		
 		// Initialize components
 		components = new HashMap<String, Object>();
 		components.put("memberDao", memberDao);
 		components.put("bookDao", bookDao);
 		components.put("librarianDao", librarianDao);
+		components.put("borrowDao", borrowDao);
 		components.put("memberService", memberService);
 		components.put("bookService", bookService);
 		components.put("librarianService", librarianService);

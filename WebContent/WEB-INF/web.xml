@@ -89,4 +89,13 @@
 		<servlet-name>AdminLogout</servlet-name>
 		<url-pattern>/_admin/logout</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>BorrowBookServlet</servlet-name>
+		<servlet-class>com.vathanakmao.libmgmt.web.servlet.BorrowBookServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BorrowBookServlet</servlet-name>
+		<url-pattern>/_admin/borrowBook</url-pattern>
+	</servlet-mapping>
 </web-app>

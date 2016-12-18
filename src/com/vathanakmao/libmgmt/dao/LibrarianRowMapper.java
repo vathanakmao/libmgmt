@@ -19,7 +19,7 @@ public class LibrarianRowMapper extends RowMapper<Librarian> {
 	@Override
 	public Librarian toPojo(ResultSet rs) throws SQLException {
 		Librarian pojo = new Librarian();
-		pojo.setId(rs.getString(COLUMN_ID));
+		pojo.setId(rs.getInt(COLUMN_ID));
 		pojo.setUsername(rs.getString(COLUMN_USERNAME));
 		pojo.setFirstName(rs.getString(COLUMN_FIRSTNAME));
 		pojo.setLastName(rs.getString(COLUMN_LASTNAME));

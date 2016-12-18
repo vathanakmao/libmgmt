@@ -11,11 +11,23 @@ import javax.servlet.http.HttpSession;
 public class WebUtil {
 
 	public static void forward(String pageName, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		RequestDispatcher rd = req.getRequestDispatcher(req.getContextPath() + "/" + pageName);
+		String page = null;
+		if (!req.getContextPath().equals("") && req.getRequestURI().startsWith(req.getContextPath())) {
+			page = pageName;
+		} else {
+			page = req.getContextPath() + "/" + pageName;
+		}
+		RequestDispatcher rd = req.getRequestDispatcher(page);
 	    rd.forward(req, resp);
 	}
 	
 	public static void redirect(String pageName, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+//		String page = null;
+//		if (!req.getContextPath().equals("") && req.getRequestURI().startsWith(req.getContextPath())) {
+//			page = pageName;
+//		} else {
+//			page = req.getContextPath() + "/" + pageName;
+//		}
 		resp.sendRedirect(req.getContextPath() + "/" + pageName);
 	}
 	
@@ -27,6 +39,16 @@ public class WebUtil {
 	public static void createAdminSession(String username, HttpServletRequest req) {
 		HttpSession session = req.getSession(true);
 		session.setAttribute("librarianUsername", username);
+	}
+	
+	public static String getMemberIdFromSession(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		return  (String) session.getAttribute("memberId");
+	}
+	
+	public static String getAdminUsernameFromSession(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		return (String) session.getAttribute("librarianUsername");
 	}
 	
 	public static boolean isMemberLoggedIn(HttpServletRequest req) {

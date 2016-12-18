@@ -6,7 +6,7 @@
 	String curPage = (String) request.getAttribute("curPage");
 	if (!"home".equals(curPage)) {
 	%>
-		<span><a href="borrowBooks.jsp">Borrow</a></span>
+		<span><a href="borrowBook.jsp">Borrow Book</a></span>
 	<%
 	} else {
 	%>

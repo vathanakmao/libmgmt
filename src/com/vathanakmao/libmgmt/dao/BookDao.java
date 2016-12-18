@@ -1,5 +1,9 @@
 package com.vathanakmao.libmgmt.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import com.vathanakmao.libmgmt.model.Book;
 
 public class BookDao extends GenericDao<Book, Long> {
@@ -27,4 +31,31 @@ public class BookDao extends GenericDao<Book, Long> {
 			.toString();
 	}
 
+	@Override
+	protected String generateSqlUpdate(Book e) {
+		return new StringBuffer()
+				.append("update ")
+				.append(getTableName())
+				.append(" set title='")
+				.append(e.getTitle())
+				.append("', author='")
+				.append(e.getAuthor())
+				.append("', code='")
+				.append(e.getCode())
+				.append("', year=")
+				.append(e.getYear())
+				.append(", stock=")
+				.append(e.getStock())
+				.append(" where id=")
+				.append(e.getId())
+				.toString();
+	}
+
+	@Override
+	protected void setId(Book e, PreparedStatement stmt) throws SQLException {
+		ResultSet rs = stmt.getGeneratedKeys();
+		if (rs.next()) {
+			e.setId(rs.getLong(1));
+		}
+	}
 }

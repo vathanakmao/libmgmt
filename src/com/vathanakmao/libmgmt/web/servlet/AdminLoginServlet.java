@@ -26,7 +26,7 @@ public class AdminLoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (!new AdminLoginValidator().validate(req)) {
-			WebUtil.forward("_admin/login.jsp", req, resp);
+			WebUtil.forward("login.jsp", req, resp);
 		    return;
 		}
 
@@ -39,11 +39,11 @@ public class AdminLoginServlet extends HttpServlet {
 				WebUtil.redirect("_admin/profile.jsp", req, resp);
 			} else {
 				ParamValidator.addError("unknown", "Invalid Password" , req);
-				WebUtil.forward("_admin/login.jsp", req, resp);
+				WebUtil.forward("login.jsp", req, resp);
 			}
 		} catch (NotFoundException e) {
 			ParamValidator.addError("unknown", e.getMessage(), req);
-			WebUtil.forward("_admin/login.jsp", req, resp);
+			WebUtil.forward("login.jsp", req, resp);
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			resp.sendError(500, e.getMessage());

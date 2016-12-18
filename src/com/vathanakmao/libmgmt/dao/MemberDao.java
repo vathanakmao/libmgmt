@@ -1,5 +1,10 @@
 package com.vathanakmao.libmgmt.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.vathanakmao.libmgmt.model.Book;
 import com.vathanakmao.libmgmt.model.Member;
 
 public class MemberDao extends GenericDao<Member, String> {
@@ -31,4 +36,16 @@ public class MemberDao extends GenericDao<Member, String> {
 			.toString();
 	}
 
+	@Override
+	protected String generateSqlUpdate(Member e) {
+		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	protected void setId(Member e, PreparedStatement stmt) throws SQLException {
+		ResultSet rs = stmt.getGeneratedKeys();
+		if (rs.next()) {
+			e.setId(rs.getString(1));
+		}
+	}
 }

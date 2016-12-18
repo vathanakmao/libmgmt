@@ -1,18 +1,18 @@
 package com.vathanakmao.libmgmt.model;
 
 public class Book {
-	private String id;
+	private Long id;
 	private String code;
 	private String title;
 	private String author;
 	private Integer year;
 	private Integer stock;
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

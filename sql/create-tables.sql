@@ -40,8 +40,8 @@ create table borrow (
 	book_id bigint not null,
 	librarian_id int not null,
 	date_borrowed timestamp not null,
-	date_returned timestamp,
-	primary key (member_id, book_id, librarian_id, date_borrowed),
+	date_returned timestamp null,
+	primary key (member_id, book_id, date_borrowed),
 	foreign key (member_id) references member(id),
 	foreign key (book_id) references book(id),
 	foreign key (librarian_id) references librarian(id)

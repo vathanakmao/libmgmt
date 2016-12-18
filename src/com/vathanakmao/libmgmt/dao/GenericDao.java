@@ -15,7 +15,9 @@ public abstract class GenericDao<T, ID> {
 	private String tableName;
 	private RowMapper<T> rowMapper;
 	
+	protected abstract void setId(T e, PreparedStatement stmt) throws SQLException;
 	protected abstract String generateSqlInsert(T e);
+	protected abstract String generateSqlUpdate(T e);
 	
 	protected GenericDao(String tableName, RowMapper<T> rowMapper) {
 		this.tableName = tableName;
@@ -47,7 +49,7 @@ public abstract class GenericDao<T, ID> {
 		if (colValue instanceof String) {
 			sql.append(" where ").append(colName).append("='").append(colValue).append("'");
 		} else if (colValue instanceof Long || colValue instanceof Integer) {
-			sql.append("where ").append(colName).append("=").append(colValue);
+			sql.append(" where ").append(colName).append("=").append(colValue);
 		} else {
 			throw new IllegalArgumentException(colValue + " is of unmapped type");
 		}
@@ -195,6 +197,28 @@ public abstract class GenericDao<T, ID> {
 	
 	public void save(T e) {
 		String query = generateSqlInsert(e);
+		Connection conn = null;
+		PreparedStatement stmt;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(query);
+			stmt.execute();
+			setId(e, stmt);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			throw new RuntimeException(e1);
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public void update(T e) {
+		String query = generateSqlUpdate(e);
 		Connection conn = null;
 		PreparedStatement stmt;
 		try {

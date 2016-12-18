@@ -1,8 +1,13 @@
 package com.vathanakmao.libmgmt.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.vathanakmao.libmgmt.model.Book;
 import com.vathanakmao.libmgmt.model.Librarian;
 
-public class LibrarianDao extends GenericDao<Librarian, Long> {
+public class LibrarianDao extends GenericDao<Librarian, Integer> {
 	
 	public LibrarianDao() {
 		super("librarian", new LibrarianRowMapper());
@@ -26,6 +31,19 @@ public class LibrarianDao extends GenericDao<Librarian, Long> {
 			.append(e.getPassword())
 			.append("')")
 			.toString();
+	}
+	
+	@Override
+	protected String generateSqlUpdate(Librarian e) {
+		throw new UnsupportedOperationException();
+	}
+	
+	@Override
+	protected void setId(Librarian e, PreparedStatement stmt) throws SQLException {
+		ResultSet rs = stmt.getGeneratedKeys();
+		if (rs.next()) {
+			e.setId(rs.getInt(1));
+		}
 	}
 
 }

@@ -17,7 +17,7 @@ public class BookRowMapper extends RowMapper<Book> {
 	@Override
 	public Book toPojo(ResultSet rs) throws SQLException {
 		Book pojo = new Book();
-		pojo.setId(rs.getString(COLUMN_ID));
+		pojo.setId(rs.getLong(COLUMN_ID));
 		pojo.setCode(rs.getString(COLUMN_CODE));
 		pojo.setTitle(rs.getString(COLUMN_TITLE));
 		pojo.setAuthor(rs.getString(COLUMN_AUTHOR));
