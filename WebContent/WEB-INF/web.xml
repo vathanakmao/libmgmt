@@ -26,7 +26,7 @@
 		<filter-class>com.vathanakmao.libmgmt.web.filter.AdminLoginFilter</filter-class>
 		<init-param>
 			<param-name>ignored-paths</param-name>
-			<param-value>^((?!/_admin).)*$,/static.*,/_admin/login.*</param-value>
+			<param-value>^((?!/_admin).)*$,/static.*,/_admin/login.*,/_admin/logout</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -79,5 +79,14 @@
 	<servlet-mapping>
 		<servlet-name>AdminLogin</servlet-name>
 		<url-pattern>/_admin/login</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AdminLogout</servlet-name>
+		<servlet-class>com.vathanakmao.libmgmt.web.servlet.AdminLogoutServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AdminLogout</servlet-name>
+		<url-pattern>/_admin/logout</url-pattern>
 	</servlet-mapping>
 </web-app>

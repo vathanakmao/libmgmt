@@ -3,7 +3,7 @@
 		<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/static/css/index.css">
 	<body>
 		<div>
-			<h1>Librarian Login</h1>
+			<h1>Admin Login</h1>
 		</div>
 		<div class="row">
 			<span class="error">${errors["unknown"]}</span>

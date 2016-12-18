@@ -24,7 +24,7 @@ public class WebUtil {
 		session.setAttribute("memberId", id);
 	}
 	
-	public static void createLibrarianSession(String username, HttpServletRequest req) {
+	public static void createAdminSession(String username, HttpServletRequest req) {
 		HttpSession session = req.getSession(true);
 		session.setAttribute("librarianUsername", username);
 	}

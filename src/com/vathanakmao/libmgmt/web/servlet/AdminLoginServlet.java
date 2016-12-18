@@ -35,7 +35,7 @@ public class AdminLoginServlet extends HttpServlet {
 		try {
 			Librarian librarian = service.login(username, plainPassword);
 			if (librarian != null) {
-				WebUtil.createLibrarianSession(username, req);
+				WebUtil.createAdminSession(username, req);
 				WebUtil.redirect("_admin/profile.jsp", req, resp);
 			} else {
 				ParamValidator.addError("unknown", "Invalid Password" , req);
