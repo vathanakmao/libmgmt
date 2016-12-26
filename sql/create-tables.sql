@@ -1,4 +1,3 @@
-
 create table member(
 	id varchar(16) not null,
 	first_name varchar(128) not null,
@@ -7,8 +6,8 @@ create table member(
 	address varchar(255) not null,
 	salt varchar(64) not null,
 	password varchar(255) not null,
-	date_created timestamp not null,
-	date_updated timestamp not null,
+	date_created timestamp not null default now(),
+	date_updated timestamp not null default now(),
 	primary key (id)
 ) engine=innodb default charset=utf8;
 
@@ -30,8 +29,8 @@ create table librarian (
 	sex enum('M', 'F') not null,
 	salt varchar(128) not null, 
 	password varchar(255) not null,
-	date_created timestamp not null,
-	date_updated timestamp not null,
+	date_created timestamp not null default now(),
+	date_updated timestamp not null default now(),
 	primary key (id)
 ) engine=innodb default charset=utf8;
 
@@ -39,7 +38,7 @@ create table borrow (
 	member_id varchar(16) not null,
 	book_id bigint not null,
 	librarian_id int not null,
-	date_borrowed timestamp not null,
+	date_borrowed timestamp not null default now(),
 	date_returned timestamp null,
 	primary key (member_id, book_id, date_borrowed),
 	foreign key (member_id) references member(id),
