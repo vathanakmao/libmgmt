@@ -96,7 +96,7 @@ public class LibrarianService {
 		Book book = bookDao.getUniqueBy(BookRowMapper.COLUMN_CODE, bookCode);
 		if (book == null || book.getStock() == null || book.getStock() == 0) {
 			System.out.println(String.format(">> Book %s is out of stock or does not exist.", book.getCode()));
-			throw new NotFoundException(String.format("Book %s does not exist", book.getCode()));
+			throw new NotFoundException(String.format("Book %s is out of stock or does not exist", book.getCode()));
 		}
 		
 		int countNotReturnedBooks = 0;

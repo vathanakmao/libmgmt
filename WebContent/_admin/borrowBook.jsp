@@ -13,6 +13,14 @@
 		<div>
 			<h1>Borrow Book</h1>
 		</div>
+		<c:if test="${successful==true}">
+			<script type="text/javascript">
+				alert("Successful");
+			</script>			
+		</c:if>
+		<div>
+			<span class="error">${errors["unknown"]}</span>
+		</div>
 		<form action="borrowBook" method="post">
 			<div class="row">
 				<label>Book Code:</label>

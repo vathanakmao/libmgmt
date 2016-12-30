@@ -34,7 +34,7 @@ public class BorrowBookServlet extends HttpServlet {
 		String bookCode = req.getParameter("bookCode");
 		try {
 			service.borrowBook(adminUsername, memberId, bookCode);
-			WebUtil.redirect("_admin/borrowBook.jsp", req, resp);
+			WebUtil.redirect("_admin/borrowSuccess.jsp", req, resp);
 		} catch (AlreadyExistsException | NotFoundException e) {
 			ParamValidator.addError("unknown", e.getMessage(), req);
 			WebUtil.forward("borrowBook.jsp", req, resp);
